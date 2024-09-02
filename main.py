@@ -24,4 +24,4 @@ async def Merhaba(ctx):
 async def heh(ctx, count_heh = 5):
     await ctx.send("he" * count_heh)
 
-bot.run("MTI3NzY3MzQ4ODU4ODYwNzY0MQ.GrLJf1.AyPRLTRcyAVlThi9G5KFRI3Wcw_QXfbTfd0_fg")
+bot.run("TOKEN")
