@@ -14,3 +14,4 @@ for i in range(uzunluk2):
     sifre2 += random.choice(karakterler)
 
 print("Şifre:", sifre, "Şifre 2:", sifre2)
+    
