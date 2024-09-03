@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from bot_console import *
 from bot_console import gen_pass
 
@@ -9,9 +9,29 @@ intents.messages = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
+activities = [
+    discord.Game(name="By Kenan McCall"),
+    discord.Activity(type=discord.ActivityType.listening, name="Kenan McCall'ın Hizmetinde!"),
+    discord.Activity(type=discord.ActivityType.watching, name="Sunucu Güvenliğini Sağlıyor!")
+]
+
+statuses = [
+    discord.Status.online,
+    discord.Status.idle,
+    discord.Status.dnd,
+]
+
+@tasks.loop(minutes = 1 )  
+async def update_status():
+    activity = random.choice(activities)
+    status = random.choice(statuses)
+    await bot.change_presence(activity=activity, status=status)
+    print(f'Aktiflik durumu ve kullanıcı durumu değiştirildi: {activity}, {status}')
+
 @bot.event
 async def on_ready():
-    print(f'{bot.user} olarak giriş yaptık')
+    print(f'Bot {bot.user.name} olarak giriş yaptı!')
+    update_status.start()
 
 @bot.event
 async def on_message(message):
@@ -51,10 +71,10 @@ async def heh(ctx, count_heh = 5):
 @commands.has_permissions(manage_messages=True)
 async def sil(ctx, limit: int):
     if limit < 1 or limit > 200:
-        await ctx.send('1 ile 200 arasında bir sayı girin.')
+        await ctx.send("1 ile 200 arasında bir sayı girin.")
         return
     
     deleted = await ctx.channel.purge(limit=limit)
-    await ctx.send(f'{len(deleted)} *mesaj silindi.*', delete_after=2)
+    await ctx.send(f"**{len(deleted)}** *mesaj silindi.*", delete_after=2)
 
 bot.run("Token")
