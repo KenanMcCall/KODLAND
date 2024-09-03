@@ -21,7 +21,7 @@ statuses = [
     discord.Status.dnd,
 ]
 
-@tasks.loop(minutes = 1 )  
+@tasks.loop(minutes = 3)  
 async def update_status():
     activity = random.choice(activities)
     status = random.choice(statuses)
@@ -77,4 +77,4 @@ async def sil(ctx, limit: int):
     deleted = await ctx.channel.purge(limit=limit)
     await ctx.send(f"**{len(deleted)}** *mesaj silindi.*", delete_after=2)
 
-bot.run("Token")
+bot.run("token")
